@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.stream.DoubleStream;
 
 public class Solution {
@@ -39,17 +40,33 @@ public class Solution {
     }
 
     public void  hypothesisAboutSignificanceOfCorrelationCoefficient(double alpha){
-        System.out.printf("Our alpha = %.3f\n" +
+        Scanner scaner = new Scanner(System.in);
+        double Kest= (r* Math.sqrt(length-2))/(Math.sqrt(1-r*r));
+        System.out.printf("\n___________Task_2___________\n" +
+                "Our alpha = %.3f\n" +
                 "Our hypothesis:\n" +
                 "H0: r = 0;\n" +
                 "H1: r != 0\n" +
                 "Kest= (r * sqrt(n - 2)) / sqrt(1 - r^2) = " +
                 "(%.3f * sqrt(%d - 2)) / sqrt(1 - %.3f^2) = " +
-                "%.3f", alpha, r, length, r*r, (r* Math.sqrt(length-2))/(Math.sqrt(1-r*r)));
-        System.out.printf("");
+                "%.3f\n", alpha, r, length, r*r, Kest);
+
+        System.out.printf("Pls, enter the value from " +
+                "Student distribution table:\nalpha = %.3f and n(%d - 2) = %d \n" +
+                "Separator - ',' \n", alpha, length, length-2);
+        double Kcr = scaner.nextDouble();
+        System.out.printf("\nGreat! You have enter: %.3f\n" +
+                "Let's compare: must be |Kest| > Kcr\n" +
+                "In our case: |%.3f| > %.3f\n" +
+                "!!! For conclusion open manual and look through  \n" +
+                "In short, if inequality is true, then reject H0,\n" +
+                "otherwise, reject H1 \n\n", Kcr, Kest, Kcr);
+
+
     }
 
     public void regressionLine() {
+        System.out.printf("\n___________Task_3___________\n");
         double bYX = selectionCorrelationsAssignment / Math.sqrt(xDispersion);
         System.out.printf("b_yx = %.3f/%.3f = %.3f\n", selectionCorrelationsAssignment, Math.sqrt(xDispersion), bYX);
         System.out.println("y_x = b_yx * x + (<y> -  b_yx * <x>)");
