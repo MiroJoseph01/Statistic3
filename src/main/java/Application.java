@@ -6,5 +6,5 @@ public class Application {
         double[] Yi= new double[]{2.8, 2.2, 3, 3.5, 3.2, 3.7, 4, 4.8, 6, 5.4, 5.2, 5.4, 6, 9 };
         Solution s = new Solution(Xi, Yi);
         s.hypothesisAboutSignificanceOfCorrelationCoefficient(0.05);
-    }
+        s.regressionLine(); }
 }
