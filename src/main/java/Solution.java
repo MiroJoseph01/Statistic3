@@ -90,10 +90,10 @@ public class Solution {
 
     public void regressionLine() {
         System.out.printf("\n___________Task_3___________\n");
-        double bYX = selectionCorrelationsAssignment / Math.sqrt(xDispersion);
-        System.out.printf("b_yx = %.3f/%.3f = %.3f\n", selectionCorrelationsAssignment, Math.sqrt(xDispersion), bYX);
+        double bYX = selectionCorrelationsAssignment / xDispersion;
+        System.out.printf("b_yx = %.3f/%.3f = %.3f\n", selectionCorrelationsAssignment, xDispersion, bYX);
         System.out.println("y_x = b_yx * x + (<y> -  b_yx * <x>)");
-        System.out.printf("y_x = %.3f * x + (%.3f -  %.3f * %.3f)", bYX, yExpectation, bYX, xExpectation);
+        System.out.printf("y_x = %.3f * x + (%.3f -  %.3f * %.3f)\n", bYX, yExpectation, bYX, xExpectation);
         double b = yExpectation - bYX * xExpectation;
         System.out.printf("y_x = %.3f * x + %.3f\n", bYX, b);
     }
