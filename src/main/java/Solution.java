@@ -28,6 +28,7 @@ public class Solution {
     }
     //1
     public void estimationOfCorrelationCoefficient() {
+        System.out.printf("\n___________Task_1___________\n");
         StringBuilder XExp = new StringBuilder();
         XExp.append("XExpectation = 1/").append(length).append("(");
         for (double i:this.Xi){
@@ -49,15 +50,13 @@ public class Solution {
         System.out.printf("Sx^2 = 1/%d * (", length);
         calcDispersion(Xi, xExpectation, true);
         System.out.printf(" = %.3f \n", xDispersion);
-        xDispersion = Math.sqrt(xDispersion);
-        System.out.printf("Sx = %.2f\n", xDispersion);
+        System.out.printf("Sx = %.2f\n", Math.sqrt(xDispersion));
 
 
         System.out.printf("Sy^2 = 1/%d * (", length);
         calcDispersion(Yi, yExpectation, true);
         System.out.printf(" = %.3f \n", yDispersion);
-        yDispersion = Math.sqrt(yDispersion);
-        System.out.printf("Sy = %.2f\n", yDispersion);
+        System.out.printf("Sy = %.2f\n", Math.sqrt(xDispersion));
 
         GetR(true);
     }
