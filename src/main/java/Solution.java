@@ -16,9 +16,10 @@ public class Solution {
         this.Xi = Xi;
         this.Yi = Yi;
         length = Xi.length;
-        xExpectation = 1.0/length * (DoubleStream.of(Xi).sum());
-        yExpectation = 1.0/length * (DoubleStream.of(Yi).sum());
-
+        xExpectation = 1.0 / length * (DoubleStream.of(Xi).sum());
+        yExpectation = 1.0 / length * (DoubleStream.of(Yi).sum());
+        System.out.println("Add these 2 rows to your table:");
+        add2Rows();
         selectionCorrelationsAssignment = GetKxy(false);
         xDispersion = calcDispersion(Xi, xExpectation, false);
         yDispersion = calcDispersion(Yi, yExpectation, false);
@@ -26,12 +27,13 @@ public class Solution {
 
 
     }
+
     //1
     public void estimationOfCorrelationCoefficient() {
         System.out.printf("\n___________Task_1___________\n");
         StringBuilder XExp = new StringBuilder();
         XExp.append("XExpectation = 1/").append(length).append("(");
-        for (double i:this.Xi){
+        for (double i : this.Xi) {
             XExp.append(i).append(" + ");
         }
         XExp.append(") = ").append("1/").append(length).append("*").append(DoubleStream.of(Xi).sum()).append(" = ").append(xExpectation);
@@ -39,7 +41,7 @@ public class Solution {
         StringBuilder YExp = new StringBuilder();
         YExp.append("YExpectation = 1/").append(length).append("(");
 
-        for (double i:this.Yi){
+        for (double i : this.Yi) {
             YExp.append(i).append(" + ");
         }
         YExp.append(") = ").append("1/").append(length).append("*").append(DoubleStream.of(Yi).sum()).append(" = ").append(yExpectation);
@@ -62,9 +64,9 @@ public class Solution {
         GetR(true);
     }
 
-    public void  hypothesisAboutSignificanceOfCorrelationCoefficient(double alpha){
+    public void hypothesisAboutSignificanceOfCorrelationCoefficient(double alpha) {
         Scanner scaner = new Scanner(System.in);
-        double Kest= (r* Math.sqrt(length-2))/(Math.sqrt(1-r*r));
+        double Kest = (r * Math.sqrt(length - 2)) / (Math.sqrt(1 - r * r));
         System.out.printf("\n___________Task_2___________\n" +
                 "Our alpha = %.3f\n" +
                 "Our hypothesis:\n" +
@@ -72,11 +74,11 @@ public class Solution {
                 "H1: r != 0\n" +
                 "Kest= (r * sqrt(n - 2)) / sqrt(1 - r^2) = " +
                 "(%.3f * sqrt(%d - 2)) / sqrt(1 - %.3f^2) = " +
-                "%.3f\n", alpha, r, length, r*r, Kest);
+                "%.3f\n", alpha, r, length, r * r, Kest);
 
         System.out.printf("Pls, enter the value from " +
                 "Student distribution table:\nalpha = %.3f and n(%d - 2) = %d \n" +
-                "Separator - ',' \n", alpha, length, length-2);
+                "Separator - ',' \n", alpha, length, length - 2);
         double Kcr = scaner.nextDouble();
         System.out.printf("\nGreat! You have enter: %.3f\n" +
                 "Let's compare: must be |Kest| > Kcr\n" +
@@ -99,8 +101,7 @@ public class Solution {
     }
 
 
-    private double GetR(boolean print)
-    {
+    private double GetR(boolean print) {
         double R = selectionCorrelationsAssignment / (Math.sqrt(xDispersion) * Math.sqrt(yDispersion));
         if (print)
             System.out.printf("r = %.3f / (sqrt(%.3f) * sqrt(%.3f) = %.3f", selectionCorrelationsAssignment, xDispersion, yDispersion, R);
@@ -108,14 +109,14 @@ public class Solution {
     }
 
 
-    private double GetKxy(boolean print)
-    {
+    private double GetKxy(boolean print) {
         double temp = 0;
         double Kxy = 0;
         if (print)
             System.out.printf("Kxy (M11) = 1/%d *(", length);
         for (int i = 0; i < length; i++) {
             temp = (Xi[i] - xExpectation) * (Yi[i] - yExpectation);
+
             Kxy += temp;
             if (i + 1 == length && print) {
                 System.out.printf("%.3f)", temp);
@@ -123,30 +124,52 @@ public class Solution {
                 System.out.printf("%.3f + ", temp);
 
         }
-        Kxy *= (1/ (double)length);
+        if (print) System.out.printf(" = %.3f/%d ", Kxy, length);
+        Kxy /= length;
         if (print)
             System.out.printf(" = %.3f \n", Kxy);
-
+        if (print) {
+            for (int i = 0; i < length; i++) {
+                temp = (Xi[i] - xExpectation) * (Yi[i] - yExpectation);
+                System.out.printf("(%.3f - %.3f)*(%.3f - %.3f) = %.3f\n", Xi[i], xExpectation, Yi[i], yExpectation, temp);
+            }
+        }
         return Kxy;
     }
 
-    private double calcDispersion(double[] row, double Expectation, boolean print)
-    {
+    private double calcDispersion(double[] row, double Expectation, boolean print) {
         double result = 0;
         double temp = 0;
         for (int i = 0; i < length; i++) {
-            temp = Math.pow(row[i] - Expectation,2);
+            temp = Math.pow(row[i] - Expectation, 2);
             result += temp;
-            if (i + 1 == length && print)
-            {
+            if (i + 1 == length && print) {
                 System.out.printf("%.3f) ", temp);
-            } else if (print)
-            {
+            } else if (print) {
                 System.out.printf("%.3f +", temp);
             }
         }
-        result *= (1/ (double)length);
+
+        if (print) {
+            System.out.println();
+            for (int i = 0; i < length; i++) {
+                temp = Math.pow(row[i] - Expectation, 2);
+                System.out.printf("(%.3f - %.3f)^2 = = %.3f^2 = %.3f\n", row[i], Expectation, row[i] - Expectation, temp);
+            }
+        }
+        result *= (1 / (double) length);
         return result;
+    }
+
+    public void add2Rows(){
+        for (int i = 0; i < length; i++) {
+            System.out.printf(" %.3f ", Xi[i]-xExpectation);
+        }
+        System.out.println();
+        for (int i = 0; i < length; i++) {
+            System.out.printf(" %.3f ", Yi[i]-yExpectation);
+        }
+        System.out.println();
     }
 
 }
