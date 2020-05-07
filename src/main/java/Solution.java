@@ -47,6 +47,7 @@ public class Solution {
 
         GetKxy(true);
 
+
         System.out.printf("Sx^2 = 1/%d * (", length);
         calcDispersion(Xi, xExpectation, true);
         System.out.printf(" = %.3f \n", xDispersion);
@@ -112,17 +113,20 @@ public class Solution {
         double temp = 0;
         double Kxy = 0;
         if (print)
-            System.out.printf("Kxy = 1/%d *(", length);
+            System.out.printf("Kxy (M11) = 1/%d *(", length);
         for (int i = 0; i < length; i++) {
             temp = (Xi[i] - xExpectation) * (Yi[i] - yExpectation);
             Kxy += temp;
             if (i + 1 == length && print) {
-                System.out.printf("%.3f) \n", temp);
+                System.out.printf("%.3f)", temp);
             } else if (print)
                 System.out.printf("%.3f + ", temp);
 
         }
         Kxy *= (1/ (double)length);
+        if (print)
+            System.out.printf(" = %.3f \n", Kxy);
+
         return Kxy;
     }
 
