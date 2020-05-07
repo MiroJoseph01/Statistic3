@@ -18,7 +18,7 @@ public class Solution {
         length = Xi.length;
         xExpectation = 1.0/length * (DoubleStream.of(Xi).sum());
         yExpectation = 1.0/length * (DoubleStream.of(Yi).sum());
-
+        add2Rows();
         selectionCorrelationsAssignment = GetKxy(false);
         xDispersion = calcDispersion(Xi, xExpectation, false);
         yDispersion = calcDispersion(Yi, yExpectation, false);
@@ -98,6 +98,16 @@ public class Solution {
         System.out.printf("y_x = %.3f * x + %.3f\n", bYX, b);
     }
 
+    public void add2Rows(){
+        for (int i = 0; i < length; i++) {
+            System.out.printf(" %.3f ", Xi[i]-xExpectation);
+        }
+        System.out.println();
+        for (int i = 0; i < length; i++) {
+            System.out.printf(" %.3f ", Yi[i]-yExpectation);
+        }
+        System.out.println();
+    }
 
     private double GetR(boolean print)
     {
